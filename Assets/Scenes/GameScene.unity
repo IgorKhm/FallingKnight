@@ -2627,7 +2627,7 @@ MonoBehaviour:
   spawnY: 6
   baseSpawnInterval: 0.9
   difficultyStepSeconds: 10
-  spawnMultiplier: 0.92
+  spawnMultiplier: 1
   distributionType: 0
   maxFallingObjects: 12
   fallingObjectPrefab: {fileID: 6757874857937659440, guid: b6b464f346908b14694ac45dd936112b, type: 3}
@@ -2824,12 +2824,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b1939ce8002478aa47f7cdb1aff8a2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
   playerHealth: {fileID: 29182474}
   playerController: {fileID: 29182475}
   spawner: {fileID: 1791075289}
-  scoreSeconds: 0
-  highScoreSeconds: 0
   ui: {fileID: 2024776986}
 --- !u!1 &1901581614
 GameObject:

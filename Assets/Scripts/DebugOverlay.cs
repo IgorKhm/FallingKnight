@@ -60,9 +60,9 @@ public class DebugOverlay : MonoBehaviour
         if (gm != null)
         {
             sb.AppendLine("== GAME ==");
-            sb.Append("State: ").Append(gm.state).AppendLine();
-            sb.Append("Score: ").Append(gm.scoreSeconds.ToString("0.00")).Append("s  ");
-            sb.Append("High: ").Append(gm.highScoreSeconds.ToString("0.00")).AppendLine("s");
+            sb.Append("State: ").Append(gm.GameState).AppendLine();
+            sb.Append("Score: ").Append(gm.ScoreSeconds.ToString("0.00")).Append("s  ");
+            sb.Append("High: ").Append(gm.HighScoreSeconds.ToString("0.00")).AppendLine("s");
             sb.AppendLine();
         }
 

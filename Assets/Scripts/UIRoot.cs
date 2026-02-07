@@ -61,14 +61,14 @@ public class UIRoot : MonoBehaviour
     {
         if (gm == null) return;
         if (menuHighScoreText != null)
-            menuHighScoreText.text = $"High Score: {gm.highScoreSeconds:0.0}s";
+            menuHighScoreText.text = $"High Score: {gm.HighScoreSeconds:0.0}s";
 
         RefreshHUD();
 
         if (gameOverScoreText != null)
-            gameOverScoreText.text = $"Score: {gm.scoreSeconds:0.0}s";
+            gameOverScoreText.text = $"Score: {gm.ScoreSeconds:0.0}s";
         if (gameOverHighScoreText != null)
-            gameOverHighScoreText.text = $"High Score: {gm.highScoreSeconds:0.0}s";
+            gameOverHighScoreText.text = $"High Score: {gm.HighScoreSeconds:0.0}s";
     }
 
     public void RefreshHUD()
@@ -78,6 +78,6 @@ public class UIRoot : MonoBehaviour
         if (hpText != null)
             hpText.text = $"HP: {ph.HP}/{ph.MaxHP}";
         if (timerText != null)
-            timerText.text = $"{gm.scoreSeconds:0.0}s";
+            timerText.text = $"{gm.ScoreSeconds:0.0}s";
     }
 }

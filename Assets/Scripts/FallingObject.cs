@@ -7,24 +7,21 @@ public class FallingObject : MonoBehaviour
 
     [Header("Runtime debug")]
     public float spawnX;
-    [SerializeField] private float speed;
-    [SerializeField] private float accel;
 
-    private Rigidbody2D rb;
-    private bool despawning;
+    private Rigidbody2D _rb;
+    private bool _despawning;
     
-    public float CurrentSpeedY => (rb != null) ? rb.linearVelocity.y : 0f;
+    public float CurrentSpeedY => (_rb != null) ? _rb.linearVelocity.y : 0f;
     public int Damage => (config != null) ? config.dmg : 0;
 
-
+    
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = 0f;
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+        _rb = GetComponent<Rigidbody2D>();
+        _rb.gravityScale = 0f;
+        _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        _rb.interpolation = RigidbodyInterpolation2D.Interpolate;
 
-        // Apply optional visuals
         var sr = GetComponentInChildren<SpriteRenderer>();
         if (sr != null && config != null && config.sprite != null) sr.sprite = config.sprite;
 
@@ -35,11 +32,11 @@ public class FallingObject : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (despawning || config == null) return;
+        if (_despawning || !config) return;
 
         float dt = Time.fixedDeltaTime;
 
-        float vy = rb.linearVelocity.y; 
+        float vy = _rb.linearVelocity.y; 
         float targetVy = -config.speedMax;
 
         float dv = targetVy - vy;
@@ -47,22 +44,19 @@ public class FallingObject : MonoBehaviour
         float step = Mathf.Clamp(dv, -maxStep, maxStep);
         vy += step;
 
-        rb.linearVelocity = new Vector2(0f, vy);
-
-        speed = vy;
-        accel = (step / dt);
+        _rb.linearVelocity = new Vector2(0f, vy);
     }
 
     private void Despawn()
     {
-        if (despawning) return;
-        despawning = true;
+        if (_despawning) return;
+        _despawning = true;
         Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (despawning) return;
+        if (_despawning) return;
 
         if (col.collider.CompareTag("Ground"))
         {

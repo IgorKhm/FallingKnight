@@ -2,103 +2,93 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameState state = GameState.BootMenu;
+    private GameState _state = GameState.BootMenu;
 
     [Header("Refs")] public PlayerHealth playerHealth;
     public PlayerController2D playerController;
     public FallingObjectSpawner spawner;
-
-    [Header("Score")] public float scoreSeconds;
-    public float highScoreSeconds;
-
-    private const string HighScoreKey = "Evasion_HighScoreSeconds";
-
     public UIRoot ui;
 
+    private float _scoreSeconds;
+    private float _highScoreSeconds;
+    private const string HighScoreKey = "Evasion_HighScoreSeconds";
+
+    public float ScoreSeconds => _scoreSeconds;
+    public float HighScoreSeconds => _highScoreSeconds;
+    public GameState GameState => _state;
 
     private void Awake()
     {
         if (ui != null && playerHealth != null)
             ui.Init(this, playerHealth);
-        highScoreSeconds = PlayerPrefs.GetFloat(HighScoreKey, 0f);
+        _highScoreSeconds = PlayerPrefs.GetFloat(HighScoreKey, 0f);
         if (playerHealth != null) playerHealth.OnDied += HandlePlayerDied;
         GoToMenu();
     }
 
     private void Update()
     {
-        if (state == GameState.Playing)
+        if (_state == GameState.Playing)
         {
-            scoreSeconds += Time.deltaTime;
+            _scoreSeconds += Time.deltaTime;
         }
 
-        // // quick keys (optional)
-        // if (state == GameState.GameOver && Input.GetKeyDown(KeyCode.R))
-        //     StartGame();
-        // if (state == GameState.BootMenu && Input.GetKeyDown(KeyCode.Space))
-        //     StartGame();
-        //
         ui?.RefreshHUD();
     }
 
-    public void GoToMenu()
+    private void GoToMenu()
     {
-        state = GameState.BootMenu;
-        scoreSeconds = 0f;
+        _state = GameState.BootMenu;
+        _scoreSeconds = 0f;
 
-        if (playerController != null) playerController.SetInputEnabled(false);
-        if (spawner != null) spawner.ResetSpawner();
-        if (playerHealth != null) playerHealth.ResetHealth();
-
-        spawner?.ResetSpawner();
-        spawner?.SetActive(false);
+        playerController?.SetInputEnabled(false);
+        playerHealth?.ResetHealth();
+        spawner?.ResetSpawner(false);
 
         ui?.ShowMenu();
     }
 
     public void StartGame()
     {
-        Debug.Log("Starting game");
-        state = GameState.Playing;
-        scoreSeconds = 0f;
+        _state = GameState.Playing;
+        _scoreSeconds = 0f;
 
-        if (playerHealth != null) playerHealth.ResetHealth();
-        if (spawner != null) spawner.ResetSpawner();
-        if (playerController != null) playerController.SetInputEnabled(true);
-        
+        playerHealth?.ResetHealth();
+
+        if (spawner != null)
+        {
+            spawner.ResetSpawner(true);
+        }
+
         if (playerController != null)
+        {
+            playerController.SetInputEnabled(false);
             playerController.ReviveAndReset();
-
-        spawner?.ResetSpawner();
-        spawner?.SetActive(true);
+        }
 
         ui?.ShowHUD();
     }
 
     private void HandlePlayerDied()
     {
-        if (state != GameState.Playing) return;
+        if (_state != GameState.Playing) return;
 
-        state = GameState.GameOver;
+        _state = GameState.GameOver;
 
-        if (scoreSeconds > highScoreSeconds)
+        if (_scoreSeconds > _highScoreSeconds)
         {
-            highScoreSeconds = scoreSeconds;
-            PlayerPrefs.SetFloat(HighScoreKey, highScoreSeconds);
+            _highScoreSeconds = _scoreSeconds;
+            PlayerPrefs.SetFloat(HighScoreKey, _highScoreSeconds);
             PlayerPrefs.Save();
         }
 
-        if (playerController != null) playerController.SetInputEnabled(false);
-        spawner?.SetActive(false);
-
+        playerController?.SetInputEnabled(false);
+        spawner?.ResetSpawner(false);
         ui?.ShowGameOver();
     }
 
     public void QuitGame()
     {
-        Debug.Log("Quitting game");
-        spawner?.ResetSpawner();
-        spawner?.SetActive(true);
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

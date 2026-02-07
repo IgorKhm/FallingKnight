@@ -4,5 +4,6 @@ public enum PlayerMoveState
     MovingWalk,
     MovingRun,
     Stunned,
+    Slide,
     Dead
 }

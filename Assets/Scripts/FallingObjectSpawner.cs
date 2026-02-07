@@ -8,79 +8,60 @@ public enum SpawnDistributionType
 
 public class FallingObjectSpawner : MonoBehaviour
 {
-    [Header("Spawn area")]
-    public float minX = -7f;
-    public float maxX = 7f;
+    [Header("Spawn area")] public float minX = -9f;
+    public float maxX = 9f;
     public float spawnY = 6f;
 
-    [Header("Timing")]
+    [Header("Timing")] 
     public float baseSpawnInterval = 0.9f;
     public float difficultyStepSeconds = 10f;
-    [Tooltip("0 < multiplier < 1.")]
-    public float spawnMultiplier = 0.92f;
 
-    [Header("Rules")]
-    public SpawnDistributionType distributionType = SpawnDistributionType.Uniform;
+    [Tooltip("0 < multiplier < 1.")] public float spawnMultiplier = 0.92f;
+
+    [Header("Rules")] public SpawnDistributionType distributionType = SpawnDistributionType.Uniform;
     public int maxFallingObjects = 12;
 
-    [Header("Prefabs")]
-    public FallingObject fallingObjectPrefab;
+    [Header("Prefabs")] public FallingObject fallingObjectPrefab;
     public FallingObjectConfig defaultConfig;
 
-    private float timer;
-    private float elapsed;
-    private readonly HashSet<FallingObject> alive = new();
-    private bool isActive;
-    
-    public int AliveCount => alive.Count;
+    private float _timer;
+    private float _elapsed;
+    private readonly HashSet<FallingObject> _alive = new();
+    private bool _isActive;
 
-    public float DebugCurrentInterval()
+    public int AliveCount => _alive.Count;
+    public float DebugCurrentInterval() => CurrentSpawnInterval();
+    public IEnumerable<FallingObject> AliveObjects => _alive;
+    public float ElapsedSeconds => _elapsed;
+    public float TimerSeconds => _timer;
+    public bool IsActive => _isActive;
+
+    public void ResetSpawner(bool isActive)
     {
-        return CurrentSpawnInterval();
-    }
+        _isActive = isActive;
+        _timer = 0f;
+        _elapsed = 0f;
 
-    public System.Collections.Generic.IEnumerable<FallingObject> AliveObjects => alive;
-    public float ElapsedSeconds => elapsed;
-    public float TimerSeconds => timer;
-    public bool IsActive => isActive;
-
-    public void ResetSpawner()
-    {
-        isActive = false;
-        timer = 0f;
-        elapsed = 0f;
-
-        // Clean up any leftovers
-        foreach (var fo in alive)
-            if (fo != null) Destroy(fo.gameObject);
-        alive.Clear();
-    }
-    
-    public void SetActive(bool active)
-    {
-        isActive = active;
-        if (!isActive)
-        {
-            foreach (var fo in alive)
-                if (fo != null) Destroy(fo.gameObject);
-        }
+        foreach (var fo in _alive)
+            if (fo != null)
+                Destroy(fo.gameObject);
+        _alive.Clear();
     }
 
     private void Update()
     {
-        if (!isActive) return;
-        
-        elapsed += Time.deltaTime;
+        if (!_isActive) return;
 
-        // prune dead
-        alive.RemoveWhere(x => x == null);
+        _elapsed += Time.deltaTime;
+
+        _alive.RemoveWhere(x => !x);
 
         float interval = CurrentSpawnInterval();
-        timer += Time.deltaTime;
+        _timer += Time.deltaTime;
 
-        if (timer >= interval)
+        if (_timer >= interval)
         {
-            timer -= interval;
+            _timer = 0;
             TrySpawn();
         }
     }
@@ -89,24 +70,24 @@ public class FallingObjectSpawner : MonoBehaviour
     {
         if (difficultyStepSeconds <= 0f) return baseSpawnInterval;
 
-        int step = Mathf.FloorToInt(elapsed / difficultyStepSeconds);
+        int step = Mathf.FloorToInt(_elapsed / difficultyStepSeconds);
         float mult = Mathf.Pow(spawnMultiplier, step);
         return Mathf.Max(0.05f, baseSpawnInterval * mult);
     }
 
     private void TrySpawn()
     {
-        if (fallingObjectPrefab == null) return;
-        if (alive.Count >= maxFallingObjects) return; // skip spawn
+        if (!fallingObjectPrefab) return;
+        if (_alive.Count >= maxFallingObjects) return; // skip spawn
 
         float x = SampleX();
         Vector3 pos = new Vector3(x, spawnY, 0f);
 
         FallingObject fo = Instantiate(fallingObjectPrefab, pos, Quaternion.identity);
         fo.spawnX = x;
-        if (fo.config == null) fo.config = defaultConfig;
+        if (!fo.config) fo.config = defaultConfig;
 
-        alive.Add(fo);
+        _alive.Add(fo);
     }
 
     private float SampleX()

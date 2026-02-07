@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController2D : MonoBehaviour
 {
-    [Header("PlayerMovment")]
+    [Header("PlayerMovment")] 
     public float speedMax = 6f;
     public float accelWalk = 30f;
     public float accelRun = 60f;
@@ -12,196 +12,174 @@ public class PlayerController2D : MonoBehaviour
     public float runFromTime = 0.6f;
     public float stunTime = 0.35f;
 
-    [Header("Bounds")]
-    public float minX = -7f;
-    public float maxX = 7f;
+    [Header("Bounds")] 
+    public float minX = -9.5f;
+    public float maxX = 9.5f;
 
-    [Header("Debug (read-only)")]
-    [SerializeField] private float speed;
-    [SerializeField] private float acceleration;
-    [SerializeField] private PlayerMoveState state;
+    private float _speed;
+    private float _acceleration;
+    private PlayerMoveState _state;
 
-    private Rigidbody2D rb;
-    private Vector2 moveInput;
-    private int heldDir;               // -1, 0, +1
-    private int lastNonZeroDir;        // -1, +1
-    private float sameDirTimer;
-    private float stunTimer;
-    private bool inputEnabled = true;
+    private Rigidbody2D _rb;
+    private Vector2 _moveInput;
+    private int _heldDir; // -1, 0, +1
+    private float _sameDirTimer;
+    private float _stunTimer;
+    private bool _inputEnabled = true;
 
-    public PlayerMoveState State => state;
-    public float Speed => speed;
-    public float Acceleration => acceleration;
-    
-    private Vector2 spawnPos;
-    
-    public bool InputEnabled => inputEnabled;
-    public float StunRemaining => Mathf.Max(0f, stunTimer);
-    public float RunHeldTime => sameDirTimer;
-    public int HeldDir => heldDir;
-    
+    public PlayerMoveState State => _state;
+    public float Speed => _speed;
+    public float Acceleration => _acceleration;
+
+    private Vector2 _spawnPos;
+
+    public bool InputEnabled => _inputEnabled;
+    public float StunRemaining => Mathf.Max(0f, _stunTimer);
+    public float RunHeldTime => _sameDirTimer;
+    public int HeldDir => _heldDir;
+
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = 0f;
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
-        state = PlayerMoveState.Idle;
+        _rb = GetComponent<Rigidbody2D>();
+        _rb.gravityScale = 0f;
+        _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        _rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+        _state = PlayerMoveState.Idle;
     }
 
-    public void SetInputEnabled(bool enabled)
+    public void SetInputEnabled(bool inputEnable)
     {
-        inputEnabled = enabled;
-        if (!enabled)
+        _inputEnabled = inputEnable;
+        if (!inputEnable)
         {
-            moveInput = Vector2.zero;
-            heldDir = 0;
-            sameDirTimer = 0f;
+            _moveInput = Vector2.zero;
+            _heldDir = 0;
+            _sameDirTimer = 0f;
         }
     }
 
     public void StunNow()
     {
-        stunTimer = Mathf.Max(stunTimer, stunTime);
-        sameDirTimer = 0f;
-        heldDir = 0;
-        moveInput = Vector2.zero;
-        state = PlayerMoveState.Stunned;
+        _stunTimer = Mathf.Max(_stunTimer, stunTime);
+        _sameDirTimer = 0f;
+        _heldDir = 0;
+        _moveInput = Vector2.zero;
+        _state = PlayerMoveState.Stunned;
     }
 
     public void SetDead()
     {
-        state = PlayerMoveState.Dead;
+        _state = PlayerMoveState.Dead;
         SetInputEnabled(false);
-        rb.linearVelocity = Vector2.zero;
+        _rb.linearVelocity = Vector2.zero;
     }
 
     public void OnMove(InputValue value)
     {
-        if (!inputEnabled || state == PlayerMoveState.Dead) return;
+        if (!_inputEnabled || _state == PlayerMoveState.Dead) return;
 
-        moveInput = value.Get<Vector2>();
-        Debug.Log($"OnMove fired: {moveInput}");
+        _moveInput = value.Get<Vector2>();
     }
-    
+
     public void ReviveAndReset()
     {
-        ReviveAndReset(spawnPos);
-    }
-    
-    public void ReviveAndReset(Vector2 startPos)
-    {
-        // clear gameplay flags
-        stunTimer = 0f;
-        sameDirTimer = 0f;
-        heldDir = 0;
-        moveInput = Vector2.zero;
+        _stunTimer = 0f;
+        _sameDirTimer = 0f;
+        _heldDir = 0;
+        _moveInput = Vector2.zero;
 
-        // reset motion + position
-        rb.linearVelocity = Vector2.zero;
-        rb.position = startPos;
+        _rb.linearVelocity = Vector2.zero;
+        _rb.position = _spawnPos;
 
-        // reset state + enable input
-        state = PlayerMoveState.Idle;
+        _state = PlayerMoveState.Idle;
         SetInputEnabled(true);
     }
-    
+
 
     private void Start()
     {
-        spawnPos = rb.position;
+        _spawnPos = _rb.position;
     }
-
 
 
     private void Update()
     {
-        if (state == PlayerMoveState.Dead) return;
+        if (_state == PlayerMoveState.Dead) return;
 
-        if (stunTimer > 0f)
+        if (_stunTimer > 0f)
         {
-            stunTimer -= Time.deltaTime;
-            if (stunTimer <= 0f)
+            _stunTimer -= Time.deltaTime;
+            if (_stunTimer <= 0f)
             {
-                state = PlayerMoveState.Idle;
+                _state = PlayerMoveState.Idle;
             }
         }
 
         int dir = 0;
-        if (inputEnabled && stunTimer <= 0f)
+        if (_inputEnabled && _stunTimer <= 0f)
         {
-            float x = moveInput.x;
+            float x = _moveInput.x;
             if (x > 0.1f) dir = 1;
             else if (x < -0.1f) dir = -1;
         }
 
         if (dir == 0)
         {
-            sameDirTimer = 0f;
-            heldDir = 0;
+            _sameDirTimer = 0f;
+            _heldDir = 0;
         }
         else
         {
-            if (heldDir == 0)
+            if (_heldDir == 0 || dir != _heldDir)
             {
-                heldDir = dir;
-                lastNonZeroDir = dir;
-                sameDirTimer = 0f;
-            }
-            else if (dir != heldDir)
-            {
-                // direction flip resets run timer
-                heldDir = dir;
-                lastNonZeroDir = dir;
-                sameDirTimer = 0f;
+                _heldDir = dir;
+                _sameDirTimer = 0f;
             }
             else
             {
-                sameDirTimer += Time.deltaTime;
+                _sameDirTimer += Time.deltaTime;
             }
         }
 
-        if (stunTimer > 0f)
+        if (_stunTimer > 0f)
         {
-            state = PlayerMoveState.Stunned;
+            _state = PlayerMoveState.Stunned;
         }
-        else if (dir == 0 && Mathf.Abs(rb.linearVelocity.x) < 0.05f)
+        else if (dir == 0 && Mathf.Abs(_rb.linearVelocity.x) < 0.05f)
         {
-            state = PlayerMoveState.Idle;
+            _state = PlayerMoveState.Idle;
         }
-        else if (dir != 0 && sameDirTimer >= runFromTime)
+        else if (dir != 0 && _sameDirTimer >= runFromTime)
         {
-            state = PlayerMoveState.MovingRun;
+            _state = PlayerMoveState.MovingRun;
         }
         else if (dir != 0)
         {
-            state = PlayerMoveState.MovingWalk;
+            _state = PlayerMoveState.MovingWalk;
         }
         else
         {
-            // no input but still sliding
-            state = PlayerMoveState.MovingWalk;
+            _state = PlayerMoveState.Slide;
         }
     }
 
     private void FixedUpdate()
     {
-        if (state == PlayerMoveState.Dead) return;
+        if (_state == PlayerMoveState.Dead) return;
 
         float dt = Time.fixedDeltaTime;
-        float vx = rb.linearVelocity.x;
+        float vx = _rb.linearVelocity.x;
 
-        bool stunned = (stunTimer > 0f);
-        int dir = (stunned || !inputEnabled) ? 0 : heldDir;
+        int dir = (_stunTimer > 0f || !_inputEnabled) ? 0 : _heldDir;
 
         float targetVx = dir * speedMax;
 
-        float accel = 0f;
+        float accel;
 
         if (dir != 0)
         {
-            float a = (sameDirTimer >= runFromTime) ? accelRun : accelWalk;
+            float a = (_sameDirTimer >= runFromTime) ? accelRun : accelWalk;
             float dv = targetVx - vx;
             float maxStep = a * dt;
             float step = Mathf.Clamp(dv, -maxStep, maxStep);
@@ -210,7 +188,6 @@ public class PlayerController2D : MonoBehaviour
         }
         else
         {
-            // brake toward 0
             float dv = -vx;
             float maxStep = brakingForce * dt;
             float step = Mathf.Clamp(dv, -maxStep, maxStep);
@@ -218,14 +195,13 @@ public class PlayerController2D : MonoBehaviour
             accel = (step / dt);
         }
 
-        rb.linearVelocity = new Vector2(vx, 0f);
+        _rb.linearVelocity = new Vector2(vx, 0f);
 
-        // clamp position
-        Vector2 p = rb.position;
+        Vector2 p = _rb.position;
         p.x = Mathf.Clamp(p.x, minX, maxX);
-        rb.position = p;
+        _rb.position = p;
 
-        speed = rb.linearVelocity.x;
-        acceleration = accel;
+        _speed = _rb.linearVelocity.x;
+        _acceleration = accel;
     }
 }

@@ -7,56 +7,53 @@ public class PlayerHealth : MonoBehaviour
     public int maxHP = 3;
     public float iFramesInterval = 0.8f;
 
-    [Header("Debug (read-only)")]
-    [SerializeField] private int hp;
-    [SerializeField] private float iFrameTimer;
+    private int _hp;
+    private float _iFrameTimer;
 
     private PlayerController2D controller;
 
-    public int HP => hp;
+    public int HP => _hp;
     public int MaxHP => maxHP;
-    public bool IsInvulnerable => iFrameTimer > 0f;
+    private bool IsInvulnerable => _iFrameTimer > 0f;
 
     public event Action<int, int> OnHPChanged; // (hp, max)
     public event Action OnDied;
-    public float IFrameRemaining => Mathf.Max(0f, iFrameTimer);
+    public float IFrameRemaining => Mathf.Max(0f, _iFrameTimer);
 
     private void Awake()
     {
         controller = GetComponent<PlayerController2D>();
-        hp = maxHP;
+        _hp = maxHP;
     }
 
     private void Update()
     {
-        if (iFrameTimer > 0f) iFrameTimer -= Time.deltaTime;
+        if (_iFrameTimer > 0f) _iFrameTimer -= Time.deltaTime;
     }
 
     public void ResetHealth()
     {
-        hp = maxHP;
-        iFrameTimer = 0f;
-        OnHPChanged?.Invoke(hp, maxHP);
+        _hp = maxHP;
+        _iFrameTimer = 0f;
+        OnHPChanged?.Invoke(_hp, maxHP);
     }
 
-    public bool TryTakeHit(int dmg)
+    public void TryTakeHit(int dmg)
     {
-        if (hp <= 0) return false;
-        if (IsInvulnerable) return false;
+        if (_hp <= 0) return;
+        if (IsInvulnerable) return;
 
-        hp -= Mathf.Max(0, dmg);
-        iFrameTimer = iFramesInterval;
+        _hp -= Mathf.Max(0, dmg);
+        _iFrameTimer = iFramesInterval;
 
-        OnHPChanged?.Invoke(hp, maxHP);
+        OnHPChanged?.Invoke(_hp, maxHP);
 
         controller.StunNow();
 
-        if (hp <= 0)
+        if (_hp <= 0)
         {
             controller.SetDead();
             OnDied?.Invoke();
         }
-
-        return true;
     }
 }
