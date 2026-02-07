@@ -34,7 +34,6 @@ public class DebugOverlay : MonoBehaviour
     {
         if (Input.GetKeyDown(toggleKey))
         {
-            Debug.Log("F3 pressed - toggling debug overlay");
             SetVisible(!visible);
         }
 

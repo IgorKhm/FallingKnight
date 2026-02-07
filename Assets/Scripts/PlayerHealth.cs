@@ -38,10 +38,10 @@ public class PlayerHealth : MonoBehaviour
         OnHPChanged?.Invoke(_hp, maxHP);
     }
 
-    public void TryTakeHit(int dmg)
+    public bool TryTakeHit(int dmg)
     {
-        if (_hp <= 0) return;
-        if (IsInvulnerable) return;
+        if (_hp <= 0) return false;
+        if (IsInvulnerable) return false;
 
         _hp -= Mathf.Max(0, dmg);
         _iFrameTimer = iFramesInterval;
@@ -55,5 +55,6 @@ public class PlayerHealth : MonoBehaviour
             controller.SetDead();
             OnDied?.Invoke();
         }
+        return true;
     }
 }

@@ -61,7 +61,7 @@ public class FallingObjectSpawner : MonoBehaviour
 
         if (_timer >= interval)
         {
-            _timer = 0;
+            _timer -= interval;
             TrySpawn();
         }
     }
@@ -98,5 +98,11 @@ public class FallingObjectSpawner : MonoBehaviour
             case SpawnDistributionType.Uniform:
                 return Random.Range(minX, maxX);
         }
+    }
+    
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(new Vector3(minX, spawnY, 0), new Vector3(maxX, spawnY, 0));
     }
 }

@@ -19,10 +19,14 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (ui != null && playerHealth != null)
-            ui.Init(this, playerHealth);
         _highScoreSeconds = PlayerPrefs.GetFloat(HighScoreKey, 0f);
-        if (playerHealth != null) playerHealth.OnDied += HandlePlayerDied;
+        
+        if (playerHealth != null)
+        {
+            playerHealth.OnDied += HandlePlayerDied;
+            ui?.Init(this, playerHealth);
+        }
+        
         GoToMenu();
     }
 
@@ -31,9 +35,8 @@ public class GameManager : MonoBehaviour
         if (_state == GameState.Playing)
         {
             _scoreSeconds += Time.deltaTime;
+            ui?.RefreshHUD();
         }
-
-        ui?.RefreshHUD();
     }
 
     private void GoToMenu()
@@ -54,17 +57,8 @@ public class GameManager : MonoBehaviour
         _scoreSeconds = 0f;
 
         playerHealth?.ResetHealth();
-
-        if (spawner != null)
-        {
-            spawner.ResetSpawner(true);
-        }
-
-        if (playerController != null)
-        {
-            playerController.SetInputEnabled(false);
-            playerController.ReviveAndReset();
-        }
+        playerController?.ReviveAndReset();
+        spawner?.ResetSpawner(true);
 
         ui?.ShowHUD();
     }

@@ -46,6 +46,7 @@ public class PlayerController2D : MonoBehaviour
         _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         _rb.interpolation = RigidbodyInterpolation2D.Interpolate;
         _state = PlayerMoveState.Idle;
+        _spawnPos = _rb.position;
     }
 
     public void SetInputEnabled(bool inputEnable)
@@ -94,12 +95,6 @@ public class PlayerController2D : MonoBehaviour
 
         _state = PlayerMoveState.Idle;
         SetInputEnabled(true);
-    }
-
-
-    private void Start()
-    {
-        _spawnPos = _rb.position;
     }
 
 
@@ -204,4 +199,12 @@ public class PlayerController2D : MonoBehaviour
         _speed = _rb.linearVelocity.x;
         _acceleration = accel;
     }
+    
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawLine(new Vector3(minX, transform.position.y, 0), new Vector3(minX, transform.position.y + 1, 0));
+        Gizmos.DrawLine(new Vector3(maxX, transform.position.y, 0), new Vector3(maxX, transform.position.y + 1, 0));
+    }
+
 }

@@ -119,17 +119,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &29182473 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1951044779465675481, guid: 4c3d28b72ab53c64a8e38e18f082a756, type: 3}
-  m_PrefabInstance: {fileID: 1830246226198311462}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &29182474 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7129030911644784469, guid: 4c3d28b72ab53c64a8e38e18f082a756, type: 3}
   m_PrefabInstance: {fileID: 1830246226198311462}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 29182473}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00ffeb767171418683976198f955f982, type: 3}
@@ -140,46 +135,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8281027029977988918, guid: 4c3d28b72ab53c64a8e38e18f082a756, type: 3}
   m_PrefabInstance: {fileID: 1830246226198311462}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 29182473}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e63fb9fc69c44465ae92da273f9c92f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &29182479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 29182473}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 457096ab48b644f48a4545692020d46a, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: f5897e58-ffd4-4381-b46c-77b8a311fa00
-    m_ActionName: 'GamePlay/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]'
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: GamePlay
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &149348308
 GameObject:
   m_ObjectHideFlags: 0
@@ -2622,8 +2583,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5483b887f62342948f7647382943edd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -7
-  maxX: 7
+  minX: -9
+  maxX: 9
   spawnY: 6
   baseSpawnInterval: 0.9
   difficultyStepSeconds: 10
@@ -3258,10 +3219,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 4476464947270496167, guid: 4c3d28b72ab53c64a8e38e18f082a756, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7465547466700939402, guid: 4c3d28b72ab53c64a8e38e18f082a756, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3305,10 +3262,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1951044779465675481, guid: 4c3d28b72ab53c64a8e38e18f082a756, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 29182479}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c3d28b72ab53c64a8e38e18f082a756, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

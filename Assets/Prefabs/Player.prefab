@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7629478733315995002}
   - component: {fileID: 8281027029977988918}
   - component: {fileID: 7129030911644784469}
+  - component: {fileID: 7776009780087323098}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1951044779465675481}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.1310422, y: -0.12477057, z: -10.064165}
+  m_LocalPosition: {x: -2.1310422, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -118,11 +119,8 @@ MonoBehaviour:
   brakingForce: 40
   runFromTime: 0.6
   stunTime: 0.35
-  minX: -7
-  maxX: 7
-  speed: 0
-  acceleration: 0
-  state: 0
+  minX: -9.5
+  maxX: 9.5
 --- !u!114 &7129030911644784469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,8 +135,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 3
   iFramesInterval: 0.8
-  hp: 0
-  iFrameTimer: 0
+--- !u!114 &7776009780087323098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951044779465675481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 457096ab48b644f48a4545692020d46a, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f5897e58-ffd4-4381-b46c-77b8a311fa00
+    m_ActionName: 'GamePlay/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]'
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: GamePlay
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &5194381096430718819
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +195,7 @@ Transform:
   m_GameObject: {fileID: 5194381096430718819}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10.064165}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
