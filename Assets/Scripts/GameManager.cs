@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour
         }
 
         if (playerController != null) playerController.SetInputEnabled(false);
+        spawner?.SetActive(false);
 
         ui?.ShowGameOver();
     }

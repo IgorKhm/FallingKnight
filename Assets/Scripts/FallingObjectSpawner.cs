@@ -59,6 +59,11 @@ public class FallingObjectSpawner : MonoBehaviour
     public void SetActive(bool active)
     {
         isActive = active;
+        if (!isActive)
+        {
+            foreach (var fo in alive)
+                if (fo != null) Destroy(fo.gameObject);
+        }
     }
 
     private void Update()
