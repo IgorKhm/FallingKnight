@@ -12,6 +12,10 @@ public class FallingObject : MonoBehaviour
 
     private Rigidbody2D rb;
     private bool despawning;
+    
+    public float CurrentSpeedY => (rb != null) ? rb.linearVelocity.y : 0f;
+    public int Damage => (config != null) ? config.dmg : 0;
+
 
     private void Awake()
     {

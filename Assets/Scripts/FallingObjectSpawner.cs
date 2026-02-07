@@ -31,6 +31,18 @@ public class FallingObjectSpawner : MonoBehaviour
     private float elapsed;
     private readonly HashSet<FallingObject> alive = new();
     private bool isActive;
+    
+    public int AliveCount => alive.Count;
+
+    public float DebugCurrentInterval()
+    {
+        return CurrentSpawnInterval();
+    }
+
+    public System.Collections.Generic.IEnumerable<FallingObject> AliveObjects => alive;
+    public float ElapsedSeconds => elapsed;
+    public float TimerSeconds => timer;
+    public bool IsActive => isActive;
 
     public void ResetSpawner()
     {

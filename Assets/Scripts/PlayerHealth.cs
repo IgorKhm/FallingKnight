@@ -19,6 +19,7 @@ public class PlayerHealth : MonoBehaviour
 
     public event Action<int, int> OnHPChanged; // (hp, max)
     public event Action OnDied;
+    public float IFrameRemaining => Mathf.Max(0f, iFrameTimer);
 
     private void Awake()
     {

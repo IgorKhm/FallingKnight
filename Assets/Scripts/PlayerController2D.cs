@@ -35,6 +35,11 @@ public class PlayerController2D : MonoBehaviour
     
     private Vector2 spawnPos;
     
+    public bool InputEnabled => inputEnabled;
+    public float StunRemaining => Mathf.Max(0f, stunTimer);
+    public float RunHeldTime => sameDirTimer;
+    public int HeldDir => heldDir;
+    
 
     private void Awake()
     {
