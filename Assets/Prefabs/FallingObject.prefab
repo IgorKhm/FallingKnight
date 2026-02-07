@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7300492414278757498}
   - component: {fileID: 6757874857937659440}
   - component: {fileID: 441920325948334003}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FallingObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,8 +122,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: be84fc3d8e52ea64f84f6c1802ca9822, type: 2}
   spawnX: 0
-  speed: 0
-  accel: 0
 --- !u!212 &441920325948334003
 SpriteRenderer:
   m_ObjectHideFlags: 0
