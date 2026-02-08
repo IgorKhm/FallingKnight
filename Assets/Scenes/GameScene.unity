@@ -141,6 +141,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e63fb9fc69c44465ae92da273f9c92f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &29182478 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7465547466700939402, guid: 4c3d28b72ab53c64a8e38e18f082a756, type: 3}
+  m_PrefabInstance: {fileID: 1830246226198311462}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &149348308
 GameObject:
   m_ObjectHideFlags: 0
@@ -2587,12 +2592,16 @@ MonoBehaviour:
   maxX: 9
   spawnY: 6
   baseSpawnInterval: 0.9
-  difficultyStepSeconds: 10
-  spawnMultiplier: 1
-  distributionType: 0
+  difficultyStepSeconds: 5
+  spawnMultiplier: 0.6
+  distributionType: 1
   maxFallingObjects: 12
   fallingObjectPrefab: {fileID: 6757874857937659440, guid: b6b464f346908b14694ac45dd936112b, type: 3}
   defaultConfig: {fileID: 11400000, guid: be84fc3d8e52ea64f84f6c1802ca9822, type: 2}
+  player: {fileID: 29182478}
+  gaussianSigma: 2
+  gaussianWeight: 0.8
+  minSpawnDistanceFromPlayer: 0.4
 --- !u!4 &1791075290
 Transform:
   m_ObjectHideFlags: 0

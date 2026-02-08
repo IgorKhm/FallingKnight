@@ -3,7 +3,8 @@ using UnityEngine;
 
 public enum SpawnDistributionType
 {
-    Uniform
+    Uniform,
+    PlayerGaussian
 }
 
 public class FallingObjectSpawner : MonoBehaviour
@@ -23,6 +24,14 @@ public class FallingObjectSpawner : MonoBehaviour
 
     [Header("Prefabs")] public FallingObject fallingObjectPrefab;
     public FallingObjectConfig defaultConfig;
+    
+    [Header("Player Gaussian")]
+    public Transform player;              // assign Player transform
+    public float gaussianSigma = 2.0f;    // bigger = easier
+    [Range(0f, 1f)] public float gaussianWeight = 0.8f; // 0=uniform, 1=always gaussian
+    public float minSpawnDistanceFromPlayer = 0.4f;     // fairness
+
+    
 
     private float _timer;
     private float _elapsed;
@@ -93,12 +102,48 @@ public class FallingObjectSpawner : MonoBehaviour
     private float SampleX()
     {
         switch (distributionType)
-        {
-            default:
+        {   
+            case SpawnDistributionType.PlayerGaussian:
+            {
+                // Mix gaussian with uniform so it stays fair/varied
+                float x = (Random.value < gaussianWeight)
+                    ? SamplePlayerGaussianX()
+                    : Random.Range(minX, maxX);
+
+                // Fairness: avoid spawning exactly on the player
+                if (player && Mathf.Abs(x - player.position.x) < minSpawnDistanceFromPlayer)
+                {
+                    // push away to nearest safe side
+                    float sign = Mathf.Sign(x - player.position.x);
+                    if (sign == 0f) sign = (Random.value < 0.5f) ? -1f : 1f;
+                    x = Mathf.Clamp(player.position.x + sign * minSpawnDistanceFromPlayer, minX, maxX);
+                }
+
+                return x;
+            }
+            
             case SpawnDistributionType.Uniform:
+            default:
                 return Random.Range(minX, maxX);
         }
     }
+    
+    
+    private float SampleStandardNormal()
+    {
+        // Box–Muller: returns ~N(0,1)
+        float u1 = Mathf.Max(1e-6f, Random.value);
+        float u2 = Mathf.Max(1e-6f, Random.value);
+        return Mathf.Sqrt(-2f * Mathf.Log(u1)) * Mathf.Cos(2f * Mathf.PI * u2);
+    }
+
+    private float SamplePlayerGaussianX()
+    {
+        float mean = player ? player.position.x : (minX + maxX) * 0.5f;
+        float x = mean + gaussianSigma * SampleStandardNormal();
+        return Mathf.Clamp(x, minX, maxX);
+    }
+
     
     private void OnDrawGizmosSelected()
     {
