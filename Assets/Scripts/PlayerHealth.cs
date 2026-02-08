@@ -20,6 +20,8 @@ public class PlayerHealth : MonoBehaviour
     public event Action OnDied;
     public float IFrameRemaining => Mathf.Max(0f, _iFrameTimer);
 
+    public event Action OnHit;
+
     private void Awake()
     {
         controller = GetComponent<PlayerController2D>();
@@ -55,6 +57,11 @@ public class PlayerHealth : MonoBehaviour
             controller.SetDead();
             OnDied?.Invoke();
         }
+        else
+        {
+            OnHit?.Invoke();
+        }
+
         return true;
     }
 }
