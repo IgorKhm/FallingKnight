@@ -9,7 +9,8 @@ public enum SpawnDistributionType
 
 public class FallingObjectSpawner : MonoBehaviour
 {
-    [Header("Spawn area")] public float minX = -9f;
+    [Header("Spawn area")] 
+    public float minX = -9f;
     public float maxX = 9f;
     public float spawnY = 6f;
 
@@ -17,7 +18,7 @@ public class FallingObjectSpawner : MonoBehaviour
     public float baseSpawnInterval = 0.9f;
     public float difficultyStepSeconds = 10f;
 
-    [Tooltip("0 < multiplier < 1.")] public float spawnMultiplier = 0.92f;
+    [Tooltip("0 < multiplier < 1.")][Range(0f, 1f)] public float spawnMultiplier = 0.92f;
 
     [Header("Rules")] public SpawnDistributionType distributionType = SpawnDistributionType.Uniform;
     public int maxFallingObjects = 12;
