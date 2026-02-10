@@ -1205,7 +1205,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.46, y: 1.46, z: 1.46}
+  m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -3360,6 +3360,79 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c3d28b72ab53c64a8e38e18f082a756, type: 3}
+--- !u!1001 &8368984422272149807
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 838153640984899137, guid: 3c06394a551b33847afd11de62352251, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.1735225
+      objectReference: {fileID: 0}
+    - target: {fileID: 838153640984899137, guid: 3c06394a551b33847afd11de62352251, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.7025368
+      objectReference: {fileID: 0}
+    - target: {fileID: 838153640984899137, guid: 3c06394a551b33847afd11de62352251, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.074104324
+      objectReference: {fileID: 0}
+    - target: {fileID: 838153640984899137, guid: 3c06394a551b33847afd11de62352251, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 838153640984899137, guid: 3c06394a551b33847afd11de62352251, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 838153640984899137, guid: 3c06394a551b33847afd11de62352251, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 838153640984899137, guid: 3c06394a551b33847afd11de62352251, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 838153640984899137, guid: 3c06394a551b33847afd11de62352251, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 838153640984899137, guid: 3c06394a551b33847afd11de62352251, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 838153640984899137, guid: 3c06394a551b33847afd11de62352251, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2414750366464755228, guid: 3c06394a551b33847afd11de62352251, type: 3}
+      propertyPath: uiClick
+      value: 
+      objectReference: {fileID: 8300000, guid: 3a0111f52e575454c8ee409a3bb2dd82, type: 3}
+    - target: {fileID: 2414750366464755228, guid: 3c06394a551b33847afd11de62352251, type: 3}
+      propertyPath: musicLoop
+      value: 
+      objectReference: {fileID: 8300000, guid: 637e6e7059cf8f344aa9d0fd7f904901, type: 3}
+    - target: {fileID: 2414750366464755228, guid: 3c06394a551b33847afd11de62352251, type: 3}
+      propertyPath: playerHit
+      value: 
+      objectReference: {fileID: 8300000, guid: 2b4a088ee7810624698eeaef4efb0b23, type: 3}
+    - target: {fileID: 2414750366464755228, guid: 3c06394a551b33847afd11de62352251, type: 3}
+      propertyPath: objectImpact
+      value: 
+      objectReference: {fileID: 8300000, guid: da5b2f4b587f53b4aa27cd1662e757dd, type: 3}
+    - target: {fileID: 5934264483714314916, guid: 3c06394a551b33847afd11de62352251, type: 3}
+      propertyPath: m_Name
+      value: AudioManger
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3c06394a551b33847afd11de62352251, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3373,3 +3446,4 @@ SceneRoots:
   - {fileID: 1861076786}
   - {fileID: 1791075290}
   - {fileID: 556038727}
+  - {fileID: 8368984422272149807}

@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
         playerHealth?.ResetHealth();
         playerController?.ReviveAndReset();
         spawner?.ResetSpawner(true);
+        AudioManager.I?.PlayMusic();
 
         ui?.ShowHUD();
     }
@@ -79,6 +80,7 @@ public class GameManager : MonoBehaviour
         playerController?.SetInputEnabled(false);
         spawner?.ResetSpawner(false);
         ui?.ShowGameOver();
+        AudioManager.I?.StopMusic(); 
     }
 
     public void QuitGame()

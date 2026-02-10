@@ -51,6 +51,8 @@ public class PlayerHealth : MonoBehaviour
         OnHPChanged?.Invoke(_hp, maxHP);
 
         controller.StunNow();
+        
+        AudioManager.I?.PlayPlayerHit();
 
         if (_hp <= 0)
         {

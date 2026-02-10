@@ -60,6 +60,7 @@ public class FallingObject : MonoBehaviour
 
         if (col.collider.CompareTag("Ground"))
         {
+            AudioManager.I?.PlayObjectImpact();
             Despawn();
             return;
         }
