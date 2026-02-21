@@ -929,7 +929,7 @@ MonoBehaviour:
   halfHeart: {fileID: -7120950923727401213, guid: 1c3304bcf1283524cb49dce99f9435c3, type: 3}
   emptyHeart: {fileID: 7712834068120919974, guid: 1c3304bcf1283524cb49dce99f9435c3, type: 3}
   unitsPerHeart: 2
-  shakeFrames: 16
+  shakeFrames: 45
   shakeMagnitude: 8
 --- !u!1 &425105749
 GameObject:
