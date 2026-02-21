@@ -6,11 +6,12 @@ public class PlayerAnimator : MonoBehaviour
     public Animator animator;
     public PlayerController2D controller;
     public PlayerHealth health;
+    public SpriteRenderer spriteRenderer;
 
     [Header("Tuning")]
     public float movingThreshold = 0.05f;
 
-    private readonly int SpeedX = Animator.StringToHash("SpeedX");
+    private readonly int Speed = Animator.StringToHash("Speed");
     private readonly int IsMoving = Animator.StringToHash("IsMoving");
     private readonly int IsRunning = Animator.StringToHash("IsRunning");
     private readonly int IsStunned = Animator.StringToHash("IsStunned");
@@ -22,22 +23,25 @@ public class PlayerAnimator : MonoBehaviour
         if (!animator) animator = GetComponentInChildren<Animator>();
         if (!controller) controller = GetComponentInParent<PlayerController2D>();
         if (!health) health = GetComponentInParent<PlayerHealth>();
+        if (!spriteRenderer) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void OnEnable()
     {
         if (health != null)
-            health.OnHit += HandleHit; // see note below
-        if (health != null)
-            health.OnDied += HandleDied; // already exists in your health
+        {
+            health.OnHit += HandleHit;
+            health.OnDied += HandleDied;
+        }
     }
 
     private void OnDisable()
     {
         if (health != null)
+        {
             health.OnHit -= HandleHit;
-        if (health != null)
             health.OnDied -= HandleDied;
+        }
     }
 
     private void Update()
@@ -46,12 +50,18 @@ public class PlayerAnimator : MonoBehaviour
 
         float speedAbs = Mathf.Abs(controller.Speed);
 
-        animator.SetFloat(SpeedX, speedAbs);
+        animator.SetFloat(Speed, speedAbs);
         animator.SetBool(IsMoving, speedAbs > movingThreshold);
 
         animator.SetBool(IsRunning, controller.State == PlayerMoveState.MovingRun);
         animator.SetBool(IsStunned, controller.State == PlayerMoveState.Stunned);
         animator.SetBool(IsDead, controller.State == PlayerMoveState.Dead);
+
+        // Flip sprite based on input direction
+        if (controller.HeldDir != 0 && spriteRenderer != null)
+        {
+            spriteRenderer.flipX = controller.HeldDir < 0;
+        }
     }
 
     private void HandleHit()
