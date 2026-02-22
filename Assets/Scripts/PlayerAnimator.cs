@@ -6,10 +6,11 @@ public class PlayerAnimator : MonoBehaviour
     public Animator animator;
     public PlayerController2D controller;
     public PlayerHealth health;
-    public SpriteRenderer spriteRenderer;
+    public Transform characterBody;
 
     [Header("Tuning")]
     public float movingThreshold = 0.05f;
+    public float runAnimSpeed = 1.8f;
 
     private readonly int Speed = Animator.StringToHash("Speed");
     private readonly int IsMoving = Animator.StringToHash("IsMoving");
@@ -23,7 +24,7 @@ public class PlayerAnimator : MonoBehaviour
         if (!animator) animator = GetComponentInChildren<Animator>();
         if (!controller) controller = GetComponentInParent<PlayerController2D>();
         if (!health) health = GetComponentInParent<PlayerHealth>();
-        if (!spriteRenderer) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (!characterBody) characterBody = GetComponentInChildren<Animator>()?.transform;
     }
 
     private void OnEnable()
@@ -53,15 +54,27 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetFloat(Speed, speedAbs);
         animator.SetBool(IsMoving, speedAbs > movingThreshold);
 
+        animator.speed = Mathf.Lerp(1f, runAnimSpeed, speedAbs / controller.speedMax);
+
         animator.SetBool(IsRunning, controller.State == PlayerMoveState.MovingRun);
         animator.SetBool(IsStunned, controller.State == PlayerMoveState.Stunned);
         animator.SetBool(IsDead, controller.State == PlayerMoveState.Dead);
 
-        // Flip sprite based on input direction
-        if (controller.HeldDir != 0 && spriteRenderer != null)
+        // Flip entire rig based on input direction
+        if (controller.HeldDir != 0 && characterBody != null)
         {
-            spriteRenderer.flipX = controller.HeldDir < 0;
+            Vector3 s = characterBody.localScale;
+            s.x = controller.HeldDir < 0 ? -Mathf.Abs(s.x) : Mathf.Abs(s.x);
+            characterBody.localScale = s;
         }
+    }
+
+    public void ResetAnimator()
+    {
+        if (animator == null) return;
+        animator.speed = 1f;
+        animator.Rebind();
+        animator.Update(0f);
     }
 
     private void HandleHit()
