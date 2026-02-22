@@ -91,22 +91,34 @@ Assets/
 - `AudioManager` singleton with two `AudioSource` components: one for music (loop), one for SFX (`PlayOneShot`)
 - Convenience methods: `PlayUIClick()`, `PlayPlayerHit()`, `PlayObjectImpact()`
 
-### Animation (Animator contract)
-Parameters `PlayerAnimator` sets — artists must match these exactly in the Animator:
+### Animation
+
+**Setup:**
+- `CharBody.prefab` (artist-made, nested inside `Player.prefab`) holds the full skeleton: 17 SpriteRenderers + 40+ bones
+- `CharBody` has the only `Animator` component — it uses `AC_Player.controller`
+- `PlayerAnimator` (on Player root) drives CharBody's Animator via inspector reference
+
+**Rig flipping:**
+- Do NOT use `spriteRenderer.flipX` — the rig has 17 sprites across bones
+- Flip `CharBody.localScale.x` to ±1 to mirror the entire rig
+- `PlayerAnimator.characterBody` holds the CharBody Transform reference
+
+**Animation speed scaling:**
+- `animator.speed` is scaled every frame: `Lerp(1f, runAnimSpeed, speed / speedMax)`
+- `runAnimSpeed` (default 1.8) is a tunable on `PlayerAnimator`
+
+**Animator parameters** — must match `AC_Player.controller` exactly:
 | Parameter | Type    | Notes |
 |-----------|---------|-------|
-| SpeedX    | float   | absolute horizontal speed |
+| Speed     | float   | absolute horizontal speed (0–speedMax) |
 | IsMoving  | bool    | |
 | IsRunning | bool    | |
 | IsStunned | bool    | |
 | IsDead    | bool    | |
-| Hit       | Trigger | one-shot, Has Exit Time OFF |
+| Hit       | Trigger | one-shot |
 
-Recommended animator structure:
-- `Locomotion` blend tree (Idle / Walk / Run by SpeedX)
-- `Hit` one-shot state
-- `Stunned` state
-- `Dead` state (optional end state)
+**Current controller states:** Idle (no clip), Locomotion → PalyerWalk.anim, Stunned (no clip), Dead (no clip), Hit (no clip)
+- Only Locomotion has a clip assigned — remaining states need clips from artists
 
 ---
 
@@ -115,7 +127,7 @@ Recommended animator structure:
 1. **Don't break the Input System signature** — keep `OnMove(InputValue value)`
 2. **FallingObjectConfig is for type data** — don't put collider sizes or prefab structure there
 3. **Spawner skips, never queues** — when at `maxFallingObjects`, just skip that tick
-4. **ReviveAndReset** must fully reset controller, health, and spawner on restart
+4. **ReviveAndReset** is the single player reset entry point — resets controller state, health, and animator. Call only this; do not call health/animator reset separately from GameManager
 5. **DebugOverlay** is toggled with F3 — keep it wired to GM/Player/Health/Spawner references
 6. **AudioManager.I** is the only singleton — don't add more singletons without discussion
 
@@ -133,13 +145,14 @@ Recommended animator structure:
 | Hearts UI | Done (scripts + prefab, needs art wiring) |
 | Audio system | Done (wiring, needs audio clips assigned) |
 | Debug overlay (F3) | Done |
-| Animation bridge (PlayerAnimator) | Done (needs Animator Controller from artists) |
+| Animation bridge (PlayerAnimator) | Done (walk anim live, idle/stun/dead/hit states need clips) |
 | GitHub repo | Done |
 
 ## Suggested next steps
 
-1. **Art** — wire heart sprites into `HeartsUI` (fullHeart, halfHeart, emptyHeart fields)
-2. **Art** — create Animator Controller matching the parameter contract above
-3. **Audio** — assign AudioClips to `AudioManager` fields in the Inspector
-4. **Design** — tune spawner difficulty curve (`baseSpawnInterval`, `spawnMultiplier`, `difficultyStepSeconds`)
-5. **Polish** — hit feedback (screen shake, particle, flash on player hit)
+1. **Art** — create animation clips for Idle, Stunned, Dead, and Hit states in `AC_Player.controller`
+2. **Audio** — assign AudioClips to `AudioManager` fields in the Inspector
+3. **Inspector** — wire `PlayerController2D.health` and `PlayerController2D.playerAnimator` on Player prefab
+4. **Cleanup** — delete `Assets/Animation/payerWalk.anim` (duplicate, lowercase p, came in from old branch)
+5. **Design** — tune spawner difficulty curve (`baseSpawnInterval`, `spawnMultiplier`, `difficultyStepSeconds`)
+6. **Polish** — hit feedback (screen shake, particle, flash on player hit)
