@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
         _scoreSeconds = 0f;
 
         playerController?.SetInputEnabled(false);
-        playerHealth?.ResetHealth();
         spawner?.ResetSpawner(false);
 
         ui?.ShowMenu();
@@ -55,7 +54,6 @@ public class GameManager : MonoBehaviour
         _state = GameState.Playing;
         _scoreSeconds = 0f;
 
-        playerHealth?.ResetHealth();
         playerController?.ReviveAndReset();
         spawner?.ResetSpawner(true);
         AudioManager.I?.PlayMusic();

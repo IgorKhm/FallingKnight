@@ -12,7 +12,11 @@ public class PlayerController2D : MonoBehaviour
     public float runFromTime = 0.6f;
     public float stunTime = 0.35f;
 
-    [Header("Bounds")] 
+    [Header("Refs")]
+    public PlayerHealth health;
+    public PlayerAnimator playerAnimator;
+
+    [Header("Bounds")]
     public float minX = -9.5f;
     public float maxX = 9.5f;
 
@@ -95,6 +99,9 @@ public class PlayerController2D : MonoBehaviour
 
         _state = PlayerMoveState.Idle;
         SetInputEnabled(true);
+
+        health?.ResetHealth();
+        playerAnimator?.ResetAnimator();
     }
 
 
