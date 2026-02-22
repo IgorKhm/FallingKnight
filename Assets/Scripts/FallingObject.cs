@@ -54,6 +54,11 @@ public class FallingObject : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void OnBecameInvisible()
+    {
+        Despawn();
+    }
+
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (_despawning) return;

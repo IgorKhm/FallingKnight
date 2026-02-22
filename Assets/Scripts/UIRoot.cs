@@ -12,23 +12,29 @@ public class UIRoot : MonoBehaviour
     public TMP_Text menuHighScoreText;
 
     [Header("HUD")]
-    public TMP_Text hpText;
+    // public TMP_Text hpText;
     public TMP_Text timerText;
+    public HeartsUI heartsUI;
 
     [Header("GameOver")]
     public TMP_Text gameOverScoreText;
     public TMP_Text gameOverHighScoreText;
 
-    private GameManager gm;
-    private PlayerHealth ph;
+    private GameManager _gm;
+    private PlayerHealth _ph;
 
     public void Init(GameManager gameManager, PlayerHealth playerHealth)
     {
-        gm = gameManager;
-        ph = playerHealth;
+        _gm = gameManager;
+        _ph = playerHealth;
 
-        if (ph != null)
-            ph.OnHPChanged += (_, __) => RefreshHUD();
+        if (heartsUI != null && _ph != null)
+        {
+            heartsUI.Rebuild(_ph.MaxHP);
+            heartsUI.SetHP(_ph.HP);
+
+            _ph.OnHPChanged += (hp, _) => heartsUI.SetHP(hp);
+        }
 
         RefreshAll();
     }
@@ -59,25 +65,23 @@ public class UIRoot : MonoBehaviour
 
     public void RefreshAll()
     {
-        if (gm == null) return;
+        if (_gm == null) return;
         if (menuHighScoreText != null)
-            menuHighScoreText.text = $"High Score: {gm.HighScoreSeconds:0.0}s";
+            menuHighScoreText.text = $"High Score: {_gm.HighScoreSeconds:0.0}s";
 
         RefreshHUD();
 
         if (gameOverScoreText != null)
-            gameOverScoreText.text = $"Score: {gm.ScoreSeconds:0.0}s";
+            gameOverScoreText.text = $"Score: {_gm.ScoreSeconds:0.0}s";
         if (gameOverHighScoreText != null)
-            gameOverHighScoreText.text = $"High Score: {gm.HighScoreSeconds:0.0}s";
+            gameOverHighScoreText.text = $"High Score: {_gm.HighScoreSeconds:0.0}s";
     }
 
     public void RefreshHUD()
     {
-        if (gm == null || ph == null) return;
+        if (_gm == null || _ph == null) return;
 
-        if (hpText != null)
-            hpText.text = $"HP: {ph.HP}/{ph.MaxHP}";
         if (timerText != null)
-            timerText.text = $"{gm.ScoreSeconds:0.0}s";
+            timerText.text = $"{_gm.ScoreSeconds:0.0}s";
     }
 }

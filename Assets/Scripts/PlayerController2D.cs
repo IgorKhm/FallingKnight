@@ -78,7 +78,7 @@ public class PlayerController2D : MonoBehaviour
 
     public void OnMove(InputValue value)
     {
-        if (!_inputEnabled || _state == PlayerMoveState.Dead) return;
+        if (!_inputEnabled || _state == PlayerMoveState.Dead || _state == PlayerMoveState.Stunned) return;
 
         _moveInput = value.Get<Vector2>();
     }

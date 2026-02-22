@@ -22,10 +22,9 @@ public class GameManager : MonoBehaviour
         _highScoreSeconds = PlayerPrefs.GetFloat(HighScoreKey, 0f);
         
         if (playerHealth != null)
-        {
             playerHealth.OnDied += HandlePlayerDied;
-            ui?.Init(this, playerHealth);
-        }
+
+        ui?.Init(this, playerHealth);
         
         GoToMenu();
     }

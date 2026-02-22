@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerController2D))]
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHP = 3;
+    public int maxHP = 6;
     public float iFramesInterval = 0.8f;
 
     private int _hp;
