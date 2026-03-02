@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 5f7bee496f8834b44889145c537ccbd6
+guid: bf45ae700813f31448044e350dcd0eb8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8979040128133628297
-    second: BG Final_0
+      213: -98070244222629441
+    second: Foreground_0
+  - first:
+      213: -6723657067348311052
+    second: Foreground_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,9 +49,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -100,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BG Final_0
+      name: Foreground_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1920
-        height: 1080
+        width: 525
+        height: 298
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +118,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 77efd92939a046380800000000000000
-      internalID: -8979040128133628297
+      spriteID: fb9031ae1a593aef0800000000000000
+      internalID: -98070244222629441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Foreground_1
+      rect:
+        serializedVersion: 2
+        x: 1229
+        y: 0
+        width: 691
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f3c82d4585c0b2a0800000000000000
+      internalID: -6723657067348311052
       vertices: []
       indices: 
       edges: []
@@ -125,7 +150,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BG Final_0: -8979040128133628297
+      Foreground_0: -98070244222629441
+      Foreground_1: -6723657067348311052
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
