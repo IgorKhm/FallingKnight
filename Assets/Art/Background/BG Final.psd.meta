@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 09f0cd76d495bd94cb113ca5b87cc9be
+guid: 5f7bee496f8834b44889145c537ccbd6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4214201918934833100
-    second: BG Sketch_0
-  - first:
-      213: -179144006042077913
-    second: BG Sketch_1
+      213: -8979040128133628297
+    second: BG Final_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,12 +100,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BG Sketch_0
+      name: BG Final_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1921
+        width: 1920
         height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -118,30 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 438ae1abea52485c0800000000000000
-      internalID: -4214201918934833100
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BG Sketch_1
-      rect:
-        serializedVersion: 2
-        x: 2019
-        y: 0
-        width: 1921
-        height: 1080
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 725b834c97d838df0800000000000000
-      internalID: -179144006042077913
+      spriteID: 77efd92939a046380800000000000000
+      internalID: -8979040128133628297
       vertices: []
       indices: 
       edges: []
@@ -160,8 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BG Sketch_0: -4214201918934833100
-      BG Sketch_1: -179144006042077913
+      BG Final_0: -8979040128133628297
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
