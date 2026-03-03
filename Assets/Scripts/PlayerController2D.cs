@@ -147,7 +147,7 @@ public class PlayerController2D : MonoBehaviour
             }
         }
 
-        if (dir == 0 && _state == PlayerMoveState.MovingRun) _slideEligible = true;
+        if (dir == 0 && _state == PlayerMoveState.MovingRun && Mathf.Abs(_rb.linearVelocity.x) >= 5.5f) _slideEligible = true;
         if (dir != 0) _slideEligible = false;
 
         if (_stunTimer > 0f)
