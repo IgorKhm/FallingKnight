@@ -16,6 +16,7 @@ public class PlayerAnimator : MonoBehaviour
     private readonly int IsMoving = Animator.StringToHash("IsMoving");
     private readonly int IsRunning = Animator.StringToHash("IsRunning");
     private readonly int IsStunned = Animator.StringToHash("IsStunned");
+    private readonly int IsSliding = Animator.StringToHash("IsSliding");
     private readonly int IsDead = Animator.StringToHash("IsDead");
     private readonly int Hit = Animator.StringToHash("Hit");
 
@@ -58,6 +59,7 @@ public class PlayerAnimator : MonoBehaviour
 
         animator.SetBool(IsRunning, controller.State == PlayerMoveState.MovingRun);
         animator.SetBool(IsStunned, controller.State == PlayerMoveState.Stunned);
+        animator.SetBool(IsSliding, controller.State == PlayerMoveState.Slide);
         animator.SetBool(IsDead, controller.State == PlayerMoveState.Dead);
 
         // Flip entire rig based on input direction

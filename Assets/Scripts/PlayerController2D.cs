@@ -30,6 +30,7 @@ public class PlayerController2D : MonoBehaviour
     private float _sameDirTimer;
     private float _stunTimer;
     private bool _inputEnabled = true;
+    private bool _slideEligible;
 
     public PlayerMoveState State => _state;
     public float Speed => _speed;
@@ -70,6 +71,7 @@ public class PlayerController2D : MonoBehaviour
         _sameDirTimer = 0f;
         _heldDir = 0;
         _moveInput = Vector2.zero;
+        _slideEligible = false;
         _state = PlayerMoveState.Stunned;
     }
 
@@ -97,6 +99,7 @@ public class PlayerController2D : MonoBehaviour
         _rb.linearVelocity = Vector2.zero;
         _rb.position = _spawnPos;
 
+        _slideEligible = false;
         _state = PlayerMoveState.Idle;
         SetInputEnabled(true);
 
@@ -144,12 +147,16 @@ public class PlayerController2D : MonoBehaviour
             }
         }
 
+        if (dir == 0 && _state == PlayerMoveState.MovingRun) _slideEligible = true;
+        if (dir != 0) _slideEligible = false;
+
         if (_stunTimer > 0f)
         {
             _state = PlayerMoveState.Stunned;
         }
         else if (dir == 0 && Mathf.Abs(_rb.linearVelocity.x) < 0.05f)
         {
+            _slideEligible = false;
             _state = PlayerMoveState.Idle;
         }
         else if (dir != 0 && _sameDirTimer >= runFromTime)
@@ -162,7 +169,7 @@ public class PlayerController2D : MonoBehaviour
         }
         else
         {
-            _state = PlayerMoveState.Slide;
+            _state = _slideEligible ? PlayerMoveState.Slide : PlayerMoveState.Idle;
         }
     }
 
