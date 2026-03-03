@@ -1296,8 +1296,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 29182475}
-  cameraMinX: -0.3
-  cameraMaxX: 0.3
+  cameraMinX: -0.1
+  cameraMaxX: 0.1
 --- !u!1 &586169473
 GameObject:
   m_ObjectHideFlags: 0
