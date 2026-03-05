@@ -103,10 +103,10 @@ TextureImporter:
       name: Player_Health_Heart_0
       rect:
         serializedVersion: 2
-        x: 93
-        y: 151
-        width: 813
-        height: 695
+        x: 46
+        y: 67
+        width: 408
+        height: 365
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

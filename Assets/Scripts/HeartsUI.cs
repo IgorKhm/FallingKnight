@@ -5,9 +5,8 @@ using UnityEngine.UI;
 
 public class HeartsUI : MonoBehaviour
 {
-    [Header("Wiring")]
+    [Header("Wiring — place Image children manually in the editor")]
     public Transform container;        // HeartsContainer
-    public Image heartPrefab;          // UI_HeartIcon prefab (Image)
 
     [Header("Sprites")]
     public Sprite fullHeart;
@@ -25,22 +24,19 @@ public class HeartsUI : MonoBehaviour
     private readonly List<Image> hearts = new();
     private Coroutine[] _heartCoroutines;
 
-    public void Rebuild(int maxHpUnits)
+    public void Init()
     {
-        int heartCount = Mathf.CeilToInt(maxHpUnits / (float)unitsPerHeart);
-        Debug.Log($"HeartsUI.Rebuild maxHpUnits={maxHpUnits}, unitsPerHeart={unitsPerHeart}");
-
-        foreach (Transform c in container) Destroy(c.gameObject);
         hearts.Clear();
 
-        for (int i = 0; i < heartCount; i++)
+        foreach (Transform child in container)
         {
-            var img = Instantiate(heartPrefab, container);
-            img.sprite = emptyHeart;
-            hearts.Add(img);
+            var img = child.GetComponent<Image>();
+            if (img != null)
+                hearts.Add(img);
         }
 
-        _heartCoroutines = new Coroutine[heartCount];
+        _heartCoroutines = new Coroutine[hearts.Count];
+        Debug.Log($"HeartsUI.Init found {hearts.Count} pre-placed hearts");
     }
 
     public void SetHP(int hpUnits)

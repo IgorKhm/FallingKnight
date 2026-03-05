@@ -30,7 +30,7 @@ public class UIRoot : MonoBehaviour
 
         if (heartsUI != null && _ph != null)
         {
-            heartsUI.Rebuild(_ph.MaxHP);
+            heartsUI.Init();
             heartsUI.SetHP(_ph.HP);
 
             _ph.OnHPChanged += (hp, _) => heartsUI.SetHP(hp);
