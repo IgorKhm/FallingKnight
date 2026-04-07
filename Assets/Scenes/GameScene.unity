@@ -1061,9 +1061,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 1766278531}
-  fullHeart: {fileID: 4399387740371840527, guid: ea3c86f997570477cab79644d357d39f, type: 3}
-  halfHeart: {fileID: -7120950923727401213, guid: ea3c86f997570477cab79644d357d39f, type: 3}
-  emptyHeart: {fileID: 7712834068120919974, guid: ea3c86f997570477cab79644d357d39f, type: 3}
+  fullHeart: {fileID: 3572177102144496026, guid: 2cd5b7be92ee247a1ab99512245e7e56, type: 3}
+  halfHeart: {fileID: 8298175017034258123, guid: 4e1e2209a39a042228d72f551f3e70aa, type: 3}
+  emptyHeart: {fileID: -4021866592647171186, guid: dfd11c707c4e44875a6d4db7c207b979, type: 3}
   unitsPerHeart: 2
   shakeFrames: 45
   shakeMagnitude: 8
